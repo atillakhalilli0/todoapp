@@ -150,6 +150,11 @@ body {
     color: #000;
 }
 
+#editSection input:focus{
+    border: 2px solid #f11708;
+    box-shadow: 0px 0px 10px 6px #f11708;
+}
+
 #editSection {
     display: flex;
     gap: 10px;
