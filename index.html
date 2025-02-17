@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="insert">
+                <div id="total">Total tasks: 0</div>
+                <input id="search" oninput="showTasks()" type="text" placeholder="Search task...">
+                <input id="task" type="text" placeholder="Add task...">
+                <button id="addBtn">Add Task</button>
+                <button id="deletedTasksBtn">Show Deleted Tasks</button>
+            </div>
+            <div id="editSection"></div>
+            <div id="taskList" class="task-list"></div>
+            <div id="deletedList"></div>
+        </div>
+    </div>
+
+    <script>
+        const task = document.getElementById("task")
+        const addBtn = document.getElementById("addBtn")
+        const deletedTasksBtn = document.getElementById("deletedTasksBtn")
+        const taskList = document.getElementById("taskList")
+        const deletedList = document.getElementById("deletedList")
+        const search = document.getElementById("search")
+        const doned = document.getElementById("doned")
+        const total = document.getElementById("total")
+        const editSection = document.getElementById("editSection")
+
+        let tasks = []
+        let deletedTasks = []
+        let status = false
+        deletedList.style.display = 'none'
+        taskList.style.display = 'none'
+        editSection.style.display = 'none'
+
+        addBtn.onclick = function(){
+            if (task.value.trim() !== "") {
+                tasks.push({
+                    id: tasks.length + 1,
+                    task: task.value.trim(),
+                    status: false
+                });
+                showTasks();
+            }
+            editSection.style.display = 'none'
+        } 
+
+        function remove(id) {
+            const index = tasks.findIndex(item => item.id == id)
+            const deleted = tasks.splice(index, 1)
+            deletedTasks.push(deleted[0])
+            showTasks()
+            showDeletedTasks()
+            editSection.style.display = 'none'
+        }
+
+        function done(id) {
+            tasks = tasks.map(item => {
+                if (item.id === id) {
+                    return { ...item, status: true }
+                }
+                return item
+            })
+            showTasks()
+            editSection.style.display = 'none'
+        }
+
+        function edit(id){
+            tasks = tasks.map(item => {
+                if (item.id === id) {
+                    editSection.innerHTML = `
+                        <input id="editTask" type="text" value="${item.task}" placeholder="Edit task...">
+                        <button style="background-color: #02e4fd; color: #000;" onclick="finish(${id})">Save</button>
+                        <button style="background-color: #e40404; color: #fff;" onclick="cancelEdit()">Cancel</button>
+                    `
+                    editSection.style.display = "block"
+                }
+                return item
+            })
+        }
+
+        function finish(id){
+            let editInput = document.getElementById("editTask")
+            if (editInput && editInput.value.trim() !== "") {
+                tasks = tasks.map(item =>
+                    item.id === id ? { ...item, task: editInput.value.trim() } : item
+                );
+                showTasks();
+            }
+            cancelEdit()
+        }
+
+        function cancelEdit() {
+            editSection.innerHTML = "";
+            editSection.style.display = "none";
+        }
+
+        function showTasks(){
+            taskList.innerHTML = ''
+            tasks
+                .filter(item => item.task.toLowerCase().startsWith(search.value.toLowerCase()))
+                .forEach((item, index) => {
+                taskList.innerHTML += `<div class="single-task">
+                        <h3 style="text-decoration: ${item.status === true ? 'line-through' : 'none'};" id="renderTask">${index + 1}. ${item.task}</h3>
+                        <button style="background-color: #009c00; display: ${item.status === true ? 'none' : 'inline-block'};" onclick="done(${item.id})">Done</button>
+                        <button style="background-color: #1506e8; display: ${item.status === true ? 'none' : 'inline-block'};" onclick="edit(${item.id})">Edit</button>
+                        <button onclick="remove(${item.id})">Delete</button>
+                </div>`
+            })
+            task.value = ''
+            taskList.style.display = tasks.length != 0 ? 'flex' : 'none'
+            total.innerHTML = `Total tasks: ${tasks.length}`
+        }
+
+        function showDeletedTasks(){
+            deletedList.innerHTML = ''
+            deletedTasks.forEach((item, index) => {
+                deletedList.innerHTML += `
+                    <div class="single-task">
+                        <h3 id="renderTask">${index + 1}. ${item.task}</h3>
+                        ${item.status === true ? '<h4 style="background-color: #009c00;">done</h4>' : '<h4 style="background-color: #e40404;">undone</h4>'}
+                    </div>
+                `
+            })
+        }
+        
+        deletedTasksBtn.onclick = function(){
+            status = !status
+            deletedList.style.display = status ? 'flex' : 'none'
+        }
+    </script>
+</body>
+</html>

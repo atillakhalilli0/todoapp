@@ -1,0 +1,212 @@
+body {
+    background-color: #1f49a3;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.insert, .task-list, #deletedList {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #e1761e;
+    border: 2px solid #000;
+    border-radius: 15px;
+    gap: 10px;
+}
+
+.insert input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    outline: none;
+    text-align: center;
+
+    &::placeholder{
+        font-style: italic;
+    }
+}
+
+.insert button, .single-task button {
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.insert button {
+    background-color: #0123cb;
+}
+
+.insert button:hover {
+    background-color: #021a8e;
+}
+
+.single-task button {
+    background-color: #e40404;
+}
+
+.single-task button:hover {
+    background-color: #b30000;
+}
+
+.task-list, #deletedList {
+    display: none;
+    width: 100%;
+}
+
+.single-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #ffae42;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    gap: 10px;
+}
+
+.single-task h3 {
+    flex-grow: 1;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.single-task h4 {
+    min-width: 100px;
+    text-transform: capitalize;
+    text-align: center;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#total{
+    padding: 10px 15px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    color: #fff;
+    background-color: #777;
+    transition: all 0.3s ease;
+}
+
+#editSection {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #e1761e;
+    border: 2px solid #000;
+    border-radius: 15px;
+    gap: 10px;
+}
+
+#editSection input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    outline: none;
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+}
+
+#editSection {
+    display: flex;
+    gap: 10px;
+}
+
+#editSection button {
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #000;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#editSection button:first-child {
+    background-color: #0123cb;
+}
+
+#editSection button:first-child:hover {
+    background-color: #021a8e;
+}
+
+#editSection button:last-child {
+    background-color: #e40404;
+}
+
+#editSection button:last-child:hover {
+    background-color: #b30000;
+}
+
+h4[style*="background-color: #009c00;"] {
+    background-color: #28a745 !important;
+}
+
+h4[style*="background-color: #e40404;"] {
+    background-color: #dc3545 !important;
+}
+
+@media (max-width: 480px) {
+    .insert input, .single-task h3, .single-task h4 {
+        font-size: 16px;
+    }
+    
+    .insert button, .single-task button {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    .single-task {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .single-task button {
+        width: 100%;
+        text-align: center;
+    }
+}
